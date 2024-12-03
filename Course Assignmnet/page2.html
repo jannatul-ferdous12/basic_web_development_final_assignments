@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Data</title>
+    <style>
+        .hide
+        {
+            display: none;
+        }
+    </style>
+    <button id="showPage1Btn" data-launch-view="page1">View 1</button>
+    <button id="showPage2Btn" data-launch-view="page2">View 2</button>
+    <button id="showPage3Btn" data-launch-view="page3">View 3</button> 
+    <style>
+        .bar {
+            fill: steelblue;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+    <div id="lotOfPages">
+        <div> 
+            <p1><font="TIMES ROMAN" font-color="BLUE" > Select time interval</p1>
+            <select id ="dropDownId"> <!-- give an id to select box-->
+            
+              <option value="">Select Option</option>
+              <option value="page224">24H</option>
+              <option value="page248">48H</option>
+              <option value="page272">72H</option>
+              <option value="page2168">Week</option>
+              <option value="page2720">Month</option>
+            
+            </select>
+            <br>
+            <input class="SubmitButton" type="submit" name="SUBMITBUTTON"  value="Submit" style="font-size:15px; " />
+            </div>
+            <script src = "https://code.jquery.com/jquery-3.3.1.js"></script> <!-- add jquery library-->
+            <script type = "text/javascript">
+            $('.SubmitButton').click(function(){ // on submit button click
+            
+            var urldata = $('#dropDownId :selected').val(); // get the selected  option value
+            window.open(urldata+".html") // open a new window. here you need to change the url according to your wish.
+            });
+            
+            </script>
+    <div class="view" id="page2">
+            <h1>View 2</h1>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:#fff;
+            }
+</style>
+
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+        <th>Row Number</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Measurement Type</th>
+        <th>Value</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+	var myArray = []
+
+   $.ajax({
+     method:'GET',
+     url:'http://webapi19sa-1.course.tamk.cloud/v1/weather/temperature',
+     success:function(response){
+        myArray = response
+        buildTable(myArray)
+        console.log(myArray)
+     }
+   })
+
+	function buildTable(data){
+		var table = document.getElementById('myTable')
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${i}</td>
+							<td>${data[i].date_time.substring(0, 10)}</td>
+							<td>${data[i].date_time.substring(11, 19)}</td>
+                            <td>${Object.keys(data[i])[2]}</td>
+                            <td>${data[i].temperature}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+
+</script>
+        </div>
+    </div>
+    <svg width="1200" height="500"></svg>
+<script>
+
+    var svg = d3.select("svg"),
+        margin = 200,
+        width = svg.attr("width") - margin,
+        height = svg.attr("height") - margin
+
+    svg.append("text")
+       .attr("transform", "translate(100,0)")
+       .attr("x", 50)
+       .attr("y", 50)
+       .attr("font-size", "24px")
+       .text("Temperature")
+
+    var xScale = d3.scaleBand().range([0, width]).padding(0.7),
+        yScale = d3.scaleLinear().range([height, 0]);
+
+    var g = svg.append("g")
+               .attr("transform", "translate(" + 100 + "," + 100 + ")");
+
+               d3.json('http://webapi19sa-1.course.tamk.cloud/v1/weather/temperature', 
+               function(error, data) {
+        if (error) {
+            throw error;
+        }
+
+        xScale.domain(data.map(function(d) { return d.date_time.substring(11, 19); }));
+        yScale.domain([0, d3.max(data, function(d) { return d.temperature; })]);
+
+        g.append("g")
+         .attr("transform", "translate(0," + height + ")")
+         .call(d3.axisBottom(xScale))
+         .append("text")
+         .attr("y", height - 250)
+         .attr("x", width - 100)
+         .attr("text-anchor", "end")
+         .attr("stroke", "black")
+         .text("Time");
+
+        g.append("g")
+         .call(d3.axisLeft(yScale).tickFormat(function(d){
+             return "°C" + d;
+         })
+         .ticks(10))
+         .append("text")
+         .attr("transform", "rotate(-90)")
+         .attr("y", 6)
+         .attr("dy", "-5.1em")
+         .attr("text-anchor", "end")
+         .attr("stroke", "black")
+         .text("temperature");
+
+        g.selectAll(".bar")
+         .data(data)
+         .enter().append("rect")
+         .attr("class", "bar")
+         .attr("x", function(d) { return xScale(d.date_time.substring(11, 19)); })
+         .attr("y", function(d) { return yScale(d.temperature); })
+         .attr("width", xScale.bandwidth())
+         .attr("height", function(d) { return height - yScale(d.temperature); });
+    });
+</script>
+    <script src="app.js"></script>
+
+</body>
+</html>

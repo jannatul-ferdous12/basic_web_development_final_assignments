@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"/> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <title>Weather Station</title>
+  </head>
+  <body>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css"/>
+
+    <div>
+          <!-- header -->
+        <header id="myDIV">
+          <a onclick="myTable()" class="link-button active">View 1</a>
+          <a href="view2.html" class="link-button">View 2</a>
+          <a href="view3.html" class="link-button">View 3</a>
+          <a href="view4.html" class="link-button">View 4</a>
+      </header>
+
+      <!-- content -->
+      <div>
+        
+
+        <h1 id="head" class="mt-4"></h1>
+        <!-- search bar -->
+        <input type="text" id="myInput" onkeyup="myFunction()" 
+                placeholder="Search By Measurement Type" name="search" class="mt-1">
+        <!-- table -->
+        <table class="table table-striped">
+          <tbody id="myTable"></tbody>
+        </table>
+
+      </div>
+    </div>
+    
+  </body>
+
+  <!-- Script -->
+  <script>
+    // search bar
+    function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[3];
+        
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }       
+      }
+    }
+  </script>
+  <script src="index.js"></script>
+</html>

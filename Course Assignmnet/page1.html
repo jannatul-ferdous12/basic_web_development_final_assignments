@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Data</title>
+    <style>
+        .hide
+        {
+            display: none;
+        }
+    </style>
+    <button id="showPage1Btn" data-launch-view="page1">View 1</button>
+    <button id="showPage2Btn" data-launch-view="page2">View 2</button>
+    <button id="showPage3Btn" data-launch-view="page3">View 3</button> 
+</head>
+<body>
+    <div id="lotOfPages">
+
+    <div class="view" id="page1">
+            <h1>View 1</h1>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:#fff;
+            }
+</style>
+
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+        <th>Row Number</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Measurement Type</th>
+        <th>Value</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+	var myArray = []
+
+   $.ajax({
+     method:'GET',
+     url:'http://webapi19sa-1.course.tamk.cloud/v1/weather',
+     success:function(response){
+        myArray = response
+        buildTable(myArray)
+        console.log(myArray)
+     }
+   })
+
+	function buildTable(data){
+		var table = document.getElementById('myTable')
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${i}</td>
+							<td>${data[i].date_time.substring(0, 10)}</td>
+							<td>${data[i].date_time.substring(11, 19)}</td>
+                            <td>${Object.keys(data[i].data)[0]}</td>
+                            <td>${data[i].data[Object.keys(data[i].data)[0]]}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+
+</script>
+        </div>
+        
+
+    <div class="view hide" id="page3">
+            <h1>View 3</h1>
+        </div>
+
+    </div>
+    <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+/* navigation */
+.link-button {
+  cursor: pointer;
+  color: #000;
+  border: 2px solid #666;
+  padding: 5px;
+  margin-right: 0.5rem;
+  text-decoration: none;
+}
+
+.link-button:hover { 
+    Background-color: rgb(2, 24, 126); 
+    color: #ffffff; 
+}
+/* heading of all data */
+.head {
+    font-size: 3rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);  
+}
+
+/* select */
+.active, .btn:hover {
+  background-color: rgb(2, 24, 126);
+  color: white;
+}
+
+/* seach input */
+input{
+  margin-left: 2%;
+  margin-bottom: 2%;
+  height: 50px;
+  border-radius: 50px;
+}
+input[type=text] {
+  width: 20%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+  width: 96%;
+}
+
+tr:hover {
+  background-color: gray;
+  transform: scale(1 ,1.1);
+  color: aliceblue;
+}
